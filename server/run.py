@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 
 
-from os import fork, system
-
+from os import environ, fork, system
+import getpass
 
 def daemon(cmd: str):
     pid2 = fork()
@@ -14,7 +14,11 @@ def daemon(cmd: str):
 
 
 if __name__ == '__main__':
-    progname = "cred_harvester"
+    if not environ.get('CH_PASSWD'):
+        print("CH_PASSWD environmental variable not set")
+        passwd = getpass.getpass("Enter CH_PASSWD\n>>> ")
+        system(f"export CH_PASSWD={passwd}")
+    progname = "tinnyHook"
     logfile = "server.log"
     cmd = f"go build && ./{progname} 1>>{logfile} 2>/dev/null"
     daemon(cmd)
