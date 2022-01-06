@@ -54,15 +54,15 @@ func recvDrop(w http.ResponseWriter, r *http.Request) {
 		r.ParseMultipartForm(32 << 20) // limit your max input length!
 		var buf bytes.Buffer
 		// in your case file would be fileupload
-		file, header, err := r.FormFile("data")
+		fp, header, err := r.FormFile("data")
 		if err != nil {
 			panic(err)
 		}
-		defer file.Close()
+		defer fp.Close()
 		name := strings.Split(header.Filename, ".")
 		fmt.Printf("[+] Received file: %s\n", header.Filename)
 		// Copy the file data to my buffer
-		io.Copy(&buf, file)
+		io.Copy(&buf, fp)
 		// move old txt file to dump
 		// rename new txt to drop.txt
 		if _, err := os.Stat(DUMP); err != nil {
@@ -71,14 +71,14 @@ func recvDrop(w http.ResponseWriter, r *http.Request) {
 		if _, err := os.Stat(FILENAME); err == nil {
 			os.Rename(FILENAME, DUMP+(strings.Split(FILENAME, "."))[0]+"-"+time.Now().String()+"."+name[1])
 		}
-		fp, err := os.Create(FILENAME)
+		fptr, err := os.Create(FILENAME)
 		if err != nil {
 			log.Fatal(err)
 		}
 		contents := buf.String()
-		defer fp.Close()
+		defer fptr.Close()
 		for _, line := range contents {
-			fp.WriteString(string(line))
+			fptr.WriteString(string(line))
 		}
 		// reset the buffer in case I want to use it again
 		// reduces memory allocations in more intense projects
