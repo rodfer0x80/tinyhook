@@ -16,7 +16,7 @@ def daemon(cmd: str):
 if __name__ == '__main__':
     if not environ.get('CH_PASSWD'):
         print("CH_PASSWD environmental variable not set")
-        passwd = getpass.getpass("Enter CH_PASSWD\n>>> ")
+        passwd = getpass.getpass("CH_PASSWD >>> ")
         system(f"export CH_PASSWD={passwd}")
     progname = "tinnyHook"
     logfile = "server.log"

