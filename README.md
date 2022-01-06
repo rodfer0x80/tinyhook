@@ -1,7 +1,7 @@
 # tinnyHook
 ### API for Attiny85 payloads
 <p align="left">
-<img src="imgs/tinnyHook.png" width="320" height="240">
+<img src="imgs/tinnyHook.png" width="240" height="180">
 </p>
 
 ### _________________________________________________________________________
