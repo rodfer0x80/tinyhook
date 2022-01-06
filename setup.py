@@ -2,7 +2,7 @@
 
 
 import getpass
-from os import environ, rename
+from os import environ, rename, system
 
 
 if __name__ == '__main__':
@@ -20,9 +20,9 @@ if __name__ == '__main__':
     new_go_code = ""
     for line in go_code.split("\n"):
         if "const INTERFACE" in line:
-            line = f"const INTERFACE = {interface}"
+            line = f"const INTERFACE = \"{interface}\""
         if "const PORT" in line:
-            line = f"const PORT = {port}"
+            line = f"const PORT = \"{port}\""
         new_go_code += f"{line}\n"
     with open(proggie+".tmp", "w") as gfptr:
         gfptr.write(new_go_code)
@@ -33,9 +33,9 @@ if __name__ == '__main__':
     new_d_code = ""
     for line in d_code.split("\n"):
         if "#define IP_ADDRESS" in line:
-            line = f"#define IP_ADDRESS = {ip_address}"
+            line = f"#define IP_ADDRESS \"{ip_address}\""
         if "#define PORT" in line:
-            line = f"#define PORT = {port}"
+            line = f"#define PORT \"{port}\""
         new_d_code += f"{line}\n"
     with open(dropper+".tmp", "w") as dfptr:
         dfptr.write(new_d_code)

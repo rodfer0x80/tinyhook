@@ -1,6 +1,6 @@
 #include "DigiKeyboard.h"
-#define IP_ADDRESS = 10.10.10.10
-#define PORT = 8000
+#define IP_ADDRESS "10.10.10.10"
+#define PORT "8000"
 #define KEY_DOWN 0x51 // Keyboard Down Arrow
 #define KEY_ENTER 0x28 //Return/Enter Key
 void setup() {
@@ -46,5 +46,7 @@ void loop() {
   DigiKeyboard.delay(5000);
 
 }
+
+
 
 
