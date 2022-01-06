@@ -15,8 +15,8 @@ import (
 	"github.com/urfave/negroni"
 )
 
-const INTERFACE = "127.0.0.1"
-const PORT = "8000"
+const INTERFACE = 127.0.0.1
+const PORT = 8000
 const SERVER = INTERFACE + ":" + PORT
 
 const DUMP = "dump/"
@@ -139,3 +139,7 @@ func main() {
 	n.UseHandler(r)
 	http.ListenAndServe(SERVER, n)
 }
+
+
+
+

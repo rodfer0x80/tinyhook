@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 
+
 import getpass
+from os import environ, rename
 
 
 if __name__ == '__main__':
@@ -11,33 +13,32 @@ if __name__ == '__main__':
         passwd = getpass.getpass("CH_PASSWD >>> ")
         system(f"export CH_PASSWD={passwd}")
     interface = input("INTERFACE >>> ")
+    ip_address = input("IP_ADDRESS >>> ")
     port = input("PORT >>> ")
-    # get IP and PORT to host server
-    with open(proggie, "r") as fp:
-        code = fp.read()
-    new_code = ""
-    for line in code:
-        if "const INTERFACE =" in line:
+    with open(proggie, "r") as gfp:
+        go_code = gfp.read()
+    new_go_code = ""
+    for line in go_code.split("\n"):
+        if "const INTERFACE" in line:
             line = f"const INTERFACE = {interface}"
-        if "const PORT =" in line::
+        if "const PORT" in line:
             line = f"const PORT = {port}"
-        new_code += line
-    with open(proggie), "w") as fp:
-        fp.write(new_code)
-    with open(dropper, "r") as fp:
-        code = fp.read()
-    new_code = ""
-    for line in code:
-        if "#define INTERFACE" in line:
-            line = f"#define INTERFACE = {interface}"
+        new_go_code += f"{line}\n"
+    with open(proggie+".tmp", "w") as gfptr:
+        gfptr.write(new_go_code)
+    rename(proggie+".tmp", proggie)
+        
+    with open(dropper, "r") as dfp:
+        d_code = dfp.read()
+    new_d_code = ""
+    for line in d_code.split("\n"):
+        if "#define IP_ADDRESS" in line:
+            line = f"#define IP_ADDRESS = {ip_address}"
         if "#define PORT" in line:
             line = f"#define PORT = {port}"
-        new_code += line
-    with open(dropper, "w") as fp:
-        fp.write(new_code)
-
-
-
-    # change IP and PORT in all files
-    # alert when done what
+        new_d_code += f"{line}\n"
+    with open(dropper+".tmp", "w") as dfptr:
+        dfptr.write(new_d_code)
+    rename(dropper+".tmp", dropper)
+    print(f"Finished changing {interface}:{port} on files:\n\t{proggie}\n\t{dropper}")
     exit(0)
